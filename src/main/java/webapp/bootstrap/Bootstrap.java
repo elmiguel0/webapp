@@ -51,32 +51,28 @@ public class Bootstrap implements CommandLineRunner{
 
         ericSaved.getBooks().add(dddSaved);
         rodSaved.getBooks().add(noEJBSaved);
+        dddSaved.getAuthors().add(ericSaved);
+        noEJBSaved.getAuthors().add(rodSaved);
 
-        Publisher penguinPublisher = new Publisher();
-        penguinPublisher.setName("Pinguin Random House");
-        penguinPublisher.setAddress("10807 New Allegiance Drive, Suite 500");
-        penguinPublisher.setCity("Colorado Springs");
-        penguinPublisher.setState("CO");
-        penguinPublisher.setZip("80921");
 
-        Publisher harpePublisher = new Publisher();
-        harpePublisher.setName("HarperCollins");
-        harpePublisher.setAddress("");
-        harpePublisher.setState("California");
-        harpePublisher.setCity("Richmond");
-        harpePublisher.setZip("44820");
+        Publisher publisher = new Publisher();
+        publisher.setName("My Publisher");
+        publisher.setAddress("123 Main");
+        Publisher savedPublisher = publisherRepository.save(publisher);
 
-        publisherRepository.save(penguinPublisher);
-        publisherRepository.save(harpePublisher);
+        dddSaved.setPublisher(savedPublisher);
+        noEJBSaved.setPublisher(savedPublisher);
 
         authorRepository.save(ericSaved);
         authorRepository.save(rodSaved);
+        bookRepository.save(dddSaved);
+        bookRepository.save(noEJBSaved);
 
         System.out.println("In Bootstrap");
         System.out.println("Author Count: " + authorRepository.count());
         System.out.println("Book Count: " + bookRepository.count());
         System.out.println("Publisher Count: " + publisherRepository.count());
-
+        
     }
 
     
